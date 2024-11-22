@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+         /* Slider Container */
+.slider-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 30px;
+  }
+  
+  /* Filter Container */
+  .filter-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  .filter-container select,
+  .filter-container input {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #fff;
+    font-size: 16px;
+    outline: none;
+  }
+  
+  .filter-container select:focus,
+  .filter-container input:focus {
+    border-color: #33b5ff;
+  }
+  
+  .filter-container input[type="number"] {
+    width: 120px;
+  }
+
+  
+  /* Slider */
+  .slider-wrapper {
+    display: flex;
+    gap: 20px;
+    overflow-x: hidden;
+    padding: 10px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  
+  .slider {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Individual Slider Item (Product Card) */
+  .slider-item {
+    width: 250px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .slider-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .card img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 15px;
+    color: #333;
+  }
+  
+  .card p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  /* Slider Buttons (Left and Right) */
+  .slider-button {
+    background-color: #33b5ff;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    width: 50px;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+    transition: background-color 0.3s ease;
+  }
+  
+  .slider-button:hover {
+    background-color: #0297cc;
+  }
+  
+  .prev-button {
+    left: 0;
+  }
+  
+  .next-button {
+    right: 0;
+  }
+  
+  
+  .card img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 15px;
+    color: #333;
+  }
+  
+  .card p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+ 
+    </style>
+    <div class="slider-container">
+        <!-- Filter container at the top -->
+        <div class="filter-container">
+          <select id="category-filter">
+            <option value="all">All Categories</option>
+            <option value="furniture">Furniture</option>
+            <option value="decor">Decor</option>
+          </select>  
+          <input type="number" id="price-min" placeholder="Min Price" />
+          <input type="number" id="price-max" placeholder="Max Price" />
+          <input type="text" id="search-product" placeholder="Search product">
+        </div>
+      
+        <!-- Slider navigation buttons -->
+        <button class="slider-button prev-button">◀</button>
+        <div class="slider-wrapper">
+          <div class="slider">
+            <div id="no-items-message" style="display: none; text-align: center; font-size: 18px; color: #555;">
+                No items found matching your search criteria.
+              </div>
+          </div>
+        </div>
+        <button class="slider-button next-button">▶</button>
+      </div>
+      <script>
+ const API_URL = 'https://5cc9aa-2f.myshopify.com/api/2024-01/graphql.json';
+const API_KEY = '7ef1dcdd3a526d242c98aa1ff04c3f9a';
+const fetchProducts = async () => {
+  const query = `
+  query {
+  products(first: 50) {
+    edges {
+      node {
+        title
+        productType
+        images(first: 1) {
+          edges {
+            node {
+              src
+              altText
+            }
+          }
+        }
+        variants(first: 10) {
+          edges {
+            node {
+              price {
+                amount
+                currencyCode
+              }
+              selectedOptions {
+                name
+                value
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+  `;
+
+  const response = await fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Shopify-Storefront-Access-Token': API_KEY,
+    },
+    body: JSON.stringify({ query }),
+  });
+
+  const data = await response.json();
+  return data.data.products.edges;
+};
+
+const initializeShop = async () => {
+  const products = await fetchProducts();
+
+  const categorySet = new Set();
+  const colorSet = new Set();
+
+  const slider = document.querySelector('.slider');
+  slider.innerHTML = ''; // Clear existing slider items
+
+  products.forEach(({ node }) => {
+    const title = node.title;
+    const category = node.productType || 'Uncategorized';
+    const images = node.images.edges[0]?.node.src || 'default-image-url';
+    categorySet.add(category);
+
+    node.variants.edges.forEach(({ node: variant }) => {
+      const price = variant.price.amount;
+      const currency = variant.price.currencyCode;
+      // Find color option
+      const colorOption = variant.selectedOptions.find(opt => opt.name.toLowerCase() === 'color');
+      const color = colorOption ? colorOption.value : 'Unknown';
+      colorSet.add(color);
+
+      // Create slider item
+      const sliderItem = document.createElement('div');
+      sliderItem.classList.add('slider-item');
+      sliderItem.dataset.name = title.toLowerCase();
+      sliderItem.dataset.category = category.toLowerCase();
+      sliderItem.dataset.color = color.toLowerCase();
+      sliderItem.dataset.price = price;
+
+      sliderItem.innerHTML = `
+        <div class="card">
+          <img src="${images}" alt="${title}">
+          <h3>${title}</h3>
+          <p>${currency} ${price}</p>
+        </div>
+      `;
+
+      slider.appendChild(sliderItem);
+    });
+  });
+
+  // Populate filter options
+  populateFilterOptions('#category-filter', Array.from(categorySet));
+  populateFilterOptions('#color-filter', Array.from(colorSet));
+  applyFilters(); // Reapply filters with fetched data
+};
+
+const populateFilterOptions = (selector, options) => {
+  const filter = document.querySelector(selector);
+  filter.innerHTML = `<option value="all">All</option>`;
+  options.forEach(option => {
+    const optionElement = document.createElement('option');
+    optionElement.value = option.toLowerCase();
+    optionElement.textContent = option;
+    filter.appendChild(optionElement);
+  });
+};
+
+initializeShop();
+
+const categoryFilter = document.getElementById('category-filter');  // Ensure this element exists in HTML
+const colorFilter = document.getElementById('color-filter');      // Ensure this element exists in HTML
+const priceMin = document.getElementById('price-min');            // Ensure this element exists in HTML
+const priceMax = document.getElementById('price-max');            // Ensure this element exists in HTML
+const searchProduct = document.getElementById("search-product");
+
+// Filter the slider items based on the filter values
+const applyFilters = () => {
+  const category = categoryFilter.value;
+  const color = colorFilter.value;
+  const minPrice = parseInt(priceMin.value) || 0;
+  const maxPrice = parseInt(priceMax.value) || Infinity;
+  const searchQuery = searchProduct.value;
+
+  console.log(searchQuery);  // To debug
+
+  // Get all the slider items
+  const allItems = Array.from(document.querySelectorAll('.slider-item'));
+  let filteredItems = allItems;
+
+  filteredItems.forEach((item) => {
+    const itemCategory = item.dataset.category;
+    const itemColor = item.dataset.color;
+    const itemPrice = parseInt(item.dataset.price);
+    const itemName = item.dataset.name; // Assuming you have a 'name' data attribute for each item
+    const itemDescription = item.dataset.description; // Assuming you have a 'description' data attribute for each item
+
+    // Check if the item matches the filter criteria
+    const matchesCategory = category === 'all' || itemCategory === category;
+    const matchesColor = color === 'all' || itemColor === color;
+    const matchesPrice = itemPrice >= minPrice && itemPrice <= maxPrice;
+
+    // Perform case-insensitive search check using 'toLowerCase'
+    const matchesSearch =
+      (itemName && itemName.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (itemDescription && itemDescription.toLowerCase().includes(searchQuery.toLowerCase())); 
+
+    if (matchesCategory && matchesColor && matchesPrice && matchesSearch) {
+      item.style.display = 'flex'; // Show item
+    } else {
+      item.style.display = 'none'; // Hide item
+    }
+  });
+
+  // Recalculate the maximum index after filtering
+  currentIndex = 0;  // Reset index after filtering
+  updateSliderPosition();
+  adjustVisibleItems(); // Recalculate visible items
+};
+
+
+const slider = document.querySelector('.slider');
+const nextButton = document.querySelector('.next-button');
+const prevButton = document.querySelector('.prev-button');
+// Slider Functionality
+let currentIndex = 0;
+let visibleItems = 5; // Default for large screens
+let allItems = []; // Array to hold all slider items
+let filteredItems = []; // Array to hold filtered slider items
+
+// Function to update slider position based on the index
+const updateSliderPosition = () => {
+  const itemWidth = filteredItems[0] ? filteredItems[0].offsetWidth : 0; // Get width of the filtered item
+  const offset = currentIndex * (itemWidth + 15); // Adjust for gap
+  slider.style.transform = `translateX(-${offset}px)`;
+};
+
+// Update maxIndex based on filtered items
+const updateMaxIndex = () => {
+  const visibleFilteredItems = filteredItems.filter(item => item.style.display !== 'none');
+  return Math.max(0, visibleFilteredItems.length - visibleItems);
+};
+
+// Next button functionality
+nextButton.addEventListener('click', () => {
+  const maxIndex = updateMaxIndex();
+  if (currentIndex < maxIndex) {
+    currentIndex++;
+    updateSliderPosition();
+  }
+});
+
+// Previous button functionality
+prevButton.addEventListener('click', () => {
+  if (currentIndex > 0) {
+    currentIndex--;
+    updateSliderPosition();
+  }
+});
+
+// Adjust Visible Slider Items Based on Screen Size
+const adjustVisibleItems = () => {
+  const containerWidth = document.querySelector('.slider-wrapper').offsetWidth;
+  if (containerWidth >= 1024) {
+    visibleItems = 5;
+  } else if (containerWidth >= 768) {
+    visibleItems = 4;
+  } else if (containerWidth >= 480) {
+    visibleItems = 3;
+  } else {
+    visibleItems = 2;
+  }
+  currentIndex = Math.min(currentIndex, updateMaxIndex());
+  updateSliderPosition();
+};
+
+window.addEventListener('resize', adjustVisibleItems);
+adjustVisibleItems(); // Initialize on load
+
+
+
+// Attach event listeners to the filter fields
+categoryFilter.addEventListener('change', applyFilters);
+colorFilter.addEventListener('change', applyFilters);
+priceMin.addEventListener('input', applyFilters); // Trigger on input change (e.g., range or text)
+priceMax.addEventListener('input', applyFilters);
+searchProduct.addEventListener('input', applyFilters); // Trigger when user types in the search field
+
+// Call the applyFilters function on page load to initialize the slider with default filters
+window.addEventListener('DOMContentLoaded', applyFilters);
+
+      </script>
+</body>
+</html>

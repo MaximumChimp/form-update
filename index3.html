@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopify Product Display</title>
+</head>
+<body>
+  <div class="form-group">
+    <label for="product">Preferred Product</label>
+    <input type="text" id="product" name="product" required>
+  </div>
+
+  <script>
+   const API_URL = 'https://5cc9aa-2f.myshopify.com/api/2024-01/graphql.json';
+const API_KEY = '7ef1dcdd3a526d242c98aa1ff04c3f9a';
+
+const fetchProducts = async () => {
+  const query = `
+    query {
+      products(first: 10) {
+        edges {
+          node {
+            title
+            productType
+            variants(first: 10) {
+              edges {
+                node {
+                  price {
+                    amount
+                    currencyCode
+                  }
+                  selectedOptions {
+                    name
+                    value
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  const response = await fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Shopify-Storefront-Access-Token': API_KEY,
+    },
+    body: JSON.stringify({ query }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Error fetching data: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  return data.data.products.edges;
+};
+
+fetchProducts()
+  .then((products) => {
+    products.forEach(({ node }) => {
+      console.log(`Title: ${node.title}`);
+      console.log(`Category: ${node.productType}`);
+      node.variants.edges.forEach(({ node: variant }) => {
+        console.log(`Price: ${variant.price.amount} ${variant.price.currencyCode}`);
+        variant.selectedOptions.forEach((option) => {
+          if (option.name.toLowerCase() === 'color') {
+            console.log(`Color: ${option.value}`);
+          }
+        });
+      });
+    });
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+
+  </script>
+</body>
+</html>
