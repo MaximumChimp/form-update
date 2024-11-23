@@ -2,7 +2,7 @@
 const productGrid = document.getElementById('product-grid');
 const paginationControls = document.getElementById('pagination-controls');
 const searchBar = document.getElementById('search-bar');
-const categoryFilter = document.getElementById('category-filter');
+const categoryFilter = document.getElementById('categories-filter');
 const minPriceInput = document.getElementById('min-price');
 const maxPriceInput = document.getElementById('max-price');
 // Constants

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtered Product Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <input 
+                type="text" 
+                id="search-bar" 
+                placeholder="Search for a product..." 
+            />
+            <select id="category-filter">
+                <option value="">All Categories</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Clothing">Clothing</option>
+            </select>
+            <div class="price-container">
+                <input type="number" id="min-price" placeholder="Min Price" />
+                <input type="number" id="max-price" placeholder="Max Price" />
+            </div>
+            <select id="sort-filter">
+                <option value="">Default</option>
+                <option value="name-asc">Name (A-Z)</option>
+                <option value="name-desc">Name (Z-A)</option>
+                <option value="price-asc">Price (Low to High)</option>
+                <option value="price-desc">Price (High to Low)</option>
+            </select>
+        </aside>
+
+        <!-- Product Grid -->
+        <main class="main-content">
+            <div class="grid-container" id="product-grid">
+                <!-- Product Cards will be added dynamically -->
+            </div>
+            <!-- Pagination Controls -->
+            <div class="pagination" id="pagination-controls"></div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

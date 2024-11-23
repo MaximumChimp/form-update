@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Furniture Checkout</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles1.css">
 </head>
 <body>
   <div class="form-container">
@@ -82,36 +82,41 @@
     
 
       <div class="slider-container">
-        <!-- Filter container at the top -->
-        <div class="filter-container">
-          <select id="category-filter">
-            <option value="all">All</option>
-          </select>
-          <div class="price-container">
-            <input type="number" id="price-min" placeholder="Min Price" />
-            <input type="number" id="price-max" placeholder="Max Price" />
-          </div>
-          <div class="sort-container">
-            <select id="price-sort">
-                <option value="asc">Lowest - Highest</option>
-                <option value="desc">Highest - Lowest</option>
+        <div class="dashboard-container">
+          <!-- Sidebar -->
+          <aside class="sidebar">
+             
+              <select id="categories-filter">
+                  <option value="">All Categories</option>
+                  <option value="Electronics">Electronics</option>
+                  <option value="Furniture">Furniture</option>
+                  <option value="Clothing">Clothing</option>
               </select>
-              <select id="name-sort">
-                <option value="asc">A - Z</option>
-                <option value="desc">Z - A</option>
+              <input type="number" id="min-price" placeholder="Min Price" />
+              <input type="number" id="max-price" placeholder="Max Price" />
+              <select id="sort-filter">
+                  <option value="">Default</option>
+                  <option value="name-asc">Name (A-Z)</option>
+                  <option value="name-desc">Name (Z-A)</option>
+                  <option value="price-asc">Price (Low to High)</option>
+                  <option value="price-desc">Price (High to Low)</option>
               </select>
-          </div>
-          <input type="text" id="search-product" placeholder="Search product">
-        </div>
-      
-        <!-- Slider navigation buttons -->
-        <button class="slider-button prev-button">◀</button>
-        <div class="slider-wrapper">
-          <div class="slider">
-          
-          </div>
-        </div>
-        <button class="slider-button next-button">▶</button>
+              <input 
+              type="text" 
+              id="search-bar" 
+              placeholder="Search for a product..." 
+          />
+          </aside>
+  
+          <!-- Product Grid -->
+          <main class="main-content">
+              <div class="grid-container" id="product-grid">
+                  <!-- Product Cards will be added dynamically -->
+              </div>
+              <!-- Pagination Controls -->
+              <div class="pagination" id="pagination-controls"></div>
+          </main>
+      </div>
       </div>
       
       <!-- Furniture Color Selection -->
@@ -158,6 +163,6 @@
     </form>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script1.js"></script>
 </body>
 </html>
