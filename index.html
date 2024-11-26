@@ -75,10 +75,10 @@
     </div>
     
     <!-- Modal -->
-    <div id="imageModal" class="modal">
+    <!-- <div id="imageModal" class="modal">
         <span class="close">&times;</span>
         <img class="modal-content" id="modalImage">
-    </div>
+    </div> -->
     
 
       <div class="slider-container">
@@ -88,18 +88,27 @@
              
               <select id="categories-filter">
                   <option value="">All Categories</option>
-                  <option value="Electronics">Electronics</option>
-                  <option value="Furniture">Furniture</option>
-                  <option value="Clothing">Clothing</option>
               </select>
               <input type="number" id="min-price" placeholder="Min Price" />
               <input type="number" id="max-price" placeholder="Max Price" />
               <select id="sort-filter">
                   <option value="">Default</option>
-                  <option value="name-asc">Name (A-Z)</option>
-                  <option value="name-desc">Name (Z-A)</option>
+                  <option value="title-asc">Name (A-Z)</option>
+                  <option value="title-desc">Name (Z-A)</option>
                   <option value="price-asc">Price (Low to High)</option>
                   <option value="price-desc">Price (High to Low)</option>
+              </select>
+              <select id="furniture-type-filter">
+                <option value="">All Types</option>
+                <!-- Add dynamically populated options for furniture types -->
+              </select>
+              <select id="color-filter">
+                <option value="">All Colors</option>
+                <!-- Colors will be dynamically added here -->
+              </select>
+              <select id="material-filter">
+                <option value="">All Materials</option>
+                <!-- Add dynamically populated options for materials -->
               </select>
               <input 
               type="text" 
@@ -120,7 +129,7 @@
       </div>
       
       <!-- Furniture Color Selection -->
-      <div class="form-card">
+      <!-- <div class="form-card">
         <h2>Furniture Color</h2>
         <label for="color">Choose your preferred color:</label>
         <div class="color-options">
@@ -131,7 +140,7 @@
           <button type="button" class="color-btn" style="background-color: #9C27B0;" data-color="#9C27B0"></button>
         </div>
         <input type="hidden" id="selectedColor" name="furnitureColor">
-      </div>
+      </div> -->
 
       <!-- Room Images Upload -->
       <div class="form-card">
