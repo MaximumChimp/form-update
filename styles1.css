@@ -49,7 +49,7 @@ body {
   
   /* Form Card Headings */
   .form-card h2 {
-    font-size: 18px;
+    font-size: 20px;
     color: #555;
     margin-bottom: 15px;
     font-weight: 500;
@@ -89,16 +89,34 @@ body {
     background-color: #fff;
     transition: border 0.3s ease;
   }
-  
 
   
-
-  .design-options {
+  .price-range{
     display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: space-around;
+    flex-direction: row;
+  }
+  .price-range input{
+    width: 130px;
+  }
+ /* Style the modal */
+#modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
 }
+<<<<<<< HEAD
+#modal::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+=======
 
 .design-option {
     display: flex;
@@ -132,44 +150,88 @@ body {
     background: rgba(0, 0, 0, 0.7);
     justify-content: center;
     align-items: center;
+>>>>>>> 896455ba54467c590c5b032ab20e7730de7cd121
 }
 
 .modal-content {
-    max-width: 100%;
-    max-height: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-}
+  padding: 20px;
+  text-align: center;
 
-#modalImage{
-    width: 90%;
-    height: auto;
-    object-fit: contain;
-    image-rendering: auto
-}
-
- 
-.close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #333;
-    color: #fff;
-    font-size: 1.5rem;
-    padding: 5px 10px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
 }
  */
 
+#modalImage {
+  width: 100%;
+  height: auto;
 
-.close:hover,
-.close:focus {
-    color: #bbb;
-    text-decoration: none;
-    cursor: pointer;
 }
+
+/* Style for the image containers */
+.design-options {
+  display: grid;
+  grid-template-columns:auto auto auto;
+  gap: 10px;
+  justify-content: space-around;
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.image-container img {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  width: 250px; /* Set size of the images */
+}
+
+.image-container img:hover {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+}
+
+#closeModalBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #d8d5d5;
+  color: white;
+  border-radius: 50%;
+  border: none;
+  padding: 5px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  z-index: 1001; /* Make sure the close button is above the modal content */
+}
+#closeModalBtn:hover {
+  background-color: #ff4e4e;
+}
+.select-btn1 {
+  display: none;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  transition: opacity 0.3s ease;
+}
+
+.image-container:hover .select-btn1 {
+  display: block; /* Show button on hover */
+  opacity: 1;
+}
+
+/* Optional: style selected image */
+.image-container img.selected {
+  border: 3px solid #007bff; /* Border to highlight selected image */
+}
+
 
  /* Slider Container */
 .slider-container {
@@ -209,7 +271,26 @@ body {
     background-color: #fff;
     outline: none;
   }
+  .color-selection{
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    flex-direction: row;
+    margin-bottom:10px;
+    font-size: 12px;
+  }
 
+  .color-quantity-row{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row !important;
+    align-items: center !important;
+    margin-bottom: 30px;
+  }
+  .quantity-selection p{
+    padding: 0px !important;
+  }
+ 
   .filter-container input::placeholder {
     color: #aaa;
     
@@ -322,52 +403,82 @@ body {
   
  
   /* Color Picker */
-  .color-options {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-  }
-  
-  .color-btn {
+  .color-swatch {
+    display: inline-block;
     width: 30px;
     height: 30px;
-    border-radius: 50%;
-    border: none;
+    border-radius: 50%;  /* Circle shape */
+    margin-right: 5px;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    border: 2px solid transparent;
   }
   
-  .color-btn:hover {
-    transform: scale(1.2);
+  .color-swatch:hover {
+    border: 2px solid blue; /* Show a border on hover */
   }
   
-  /* Image Preview */
-  .image-preview-container,
-  .image-preview {
-    margin-top: 10px;
+  .color-swatch.selected {
+    border: 2px solid blue; /* Highlight selected color */
+  }
+
+  
+  .color-swatches {
     display: flex;
-    gap: 10px;
-    justify-content: flex-start;
+    justify-content: center;
+    gap: 5px; /* Space between color swatches */
   }
   
-  .image-preview img {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: 4px;
+
+  .quantity-input {
+    width: 65px !important; /* Adjust the width of the input as needed */
+    border: 0px !important;
+    outline: none !important;
+    border-radius: 0px !important;
   }
-  
+  #color-cont{
+    padding: 20px;
+  }
+
+  #color-cont p{
+    margin-bottom: 0px !important;
+    padding: 10px !important;
+  }
+  /* Image preview container */
+.image-preview-container {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+/* Style for each image preview */
+.image-preview-container img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+/* Style for error message */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
   /* Textarea */
   textarea {
-    resize: vertical;
+    resize: none;
     font-family: 'Arial', sans-serif;
     font-size: 14px;
     color: #333;
     border: 1px solid #ddd;
-    padding: 12px;
+    padding: 20px;
     border-radius: 4px;
     width: 100%;
     box-sizing: border-box;
+    outline: none;
   }
 
   
@@ -382,6 +493,8 @@ body {
   
   #totalPrice {
     color: #333;
+    font-size: 40px;
+    font-weight: bolder !important;
   }
   
   /* Submit Button */
@@ -474,6 +587,16 @@ body {
   background-color: transparent;
   outline: none;
   border-radius: 0px;
+}
+#furniture-type-filter,#color-filter,#material-filter{
+
+  padding: 15px;
+  border: 0px;
+  border-bottom: 1px solid black;
+  background-color: transparent;
+  outline: none;
+  border-radius: 0px;
+  margin: 0px;
 }
 #sort-filter{
   padding: 15px;
@@ -665,6 +788,72 @@ body {
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   /* Stack sidebar and main content */
+
+.filter-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+
+  .design-options {
+    display: grid;
+    grid-template-columns:auto auto auto;
+    gap: 10px;
+    justify-content: space-around;
+  }
+  
+  
+  .image-container img {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    width: 150px; /* Set size of the images */
+  }
+
+  .filter-container select,
+  .filter-container input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  /* Make min and max price appear in the same line */
+  .price-container {
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .price-container input {
+    width: 48%; /* Adjust the width to fit on one line */
+  }
+  #search-product {
+    order: -1; /* Make sure search input appears at the top */
+  }
+  .price-container,.sort-container {
+    flex-direction: row;
+  }
+  .price-container input,.sort-container select {
+    width: 48%; /* Fit the inputs next to each other */
+  }
+
+  .details-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+  }
+  .user-details{
+    width: 100%;
+  }
+  .pagination button{
+    padding: 5px 5px;
+  }
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between the elements */
+  }
+  #search-bar{
+    order: -1;
+  }
   .dashboard-container {
       flex-direction: column;
   }
@@ -700,20 +889,88 @@ body {
       font-size: 12px;
       padding: 4px 8px;
   }
+  #color-cont{
+    padding: 10px;
+  }
+  .color-quantity-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px; /* Add spacing between the two sections */
+    margin-bottom: 10px; /* Optional spacing between this row and the Add to Cart button */
+   text-align: center;
+   flex-direction: column !important;
+  }
+
+  .quantity-input{
+    width: 35px !important;
+  }
+  .price-range{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+      width: 100%;
+  }
+  
+  .price-range input:first-child{
+    margin-right: 10px;
+  }
+  .price-range input:last-child{
+    margin-left: 10px;
+  }
+ 
 }
 
 @media (max-width: 480px) {
+  .design-options {
+    display: grid;
+    grid-template-columns:auto auto auto;
+    gap: 10px;
+    justify-content: space-around;
+  }
+  
+  
+  .image-container img {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    width: 90px; /* Set size of the images */
+  }
+
+.price-container input,
+.sort-container select {
+  width: 100%; /* Stack inputs and selects */
+}
+.details-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+  }
+  .user-details{
+    width: 100%;
+  }
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between the elements */
+  }
+  #search-bar{
+    order: -1;
+  }
   .grid-container {
       grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   }
 
   .product-card img {
-      max-height: 80px;
+      max-height: 150px;
   }
 
   .product-card h2 {
       font-size: 10px;
+<<<<<<< HEAD
+=======
       text-align: start;
+>>>>>>> 896455ba54467c590c5b032ab20e7730de7cd121
   }
 
   .product-card p {
@@ -722,94 +979,44 @@ body {
 
   .product-card .select-btn {
       font-size: 10px;
-      padding: 3px 6px;
+      padding: 9px 10px;
   }
-}
+  .color-quantity-row{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+    flex-direction: column !important;
+    padding: 0px;
+  }
+  .quantity-input{
+    width: 35px !important;
+  }
+  .color-swatch {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;  /* Circle shape */
+    margin-right: 5px;
+    cursor: pointer;
+    border: 2px solid transparent;
+  }
+  .quantity-input{
+    font-size: 15px !important;
+    height: 10px !important;
+    width: 50% !important;
+    text-align: center;
+  }
+  .color-selection{
+    display: flex;
+    justify-content: center;
+    
+  }
+  .design-container {
+    grid-template-columns: 1fr; /* 1 item per row */
+  }
 
-@media screen and (max-width: 768px) {
-    .design-options {
-        justify-content: center;
-    }
-    .design-option {
-        flex: 1 1 40%;
-        max-width: 150px;
-    }
-    .filter-container {
-        flex-direction: column;
-        align-items: stretch;
-      }
-  
-      .filter-container select,
-      .filter-container input {
-        width: 100%;
-        margin-bottom: 10px;
-      }
-  
-      /* Make min and max price appear in the same line */
-      .price-container {
-        flex-direction: row;
-        width: 100%;
-      }
-  
-      .price-container input {
-        width: 48%; /* Adjust the width to fit on one line */
-      }
-      #search-product {
-        order: -1; /* Make sure search input appears at the top */
-      }
-      .price-container,.sort-container {
-        flex-direction: row;
-      }
-      .price-container input,.sort-container select {
-        width: 48%; /* Fit the inputs next to each other */
-      }
-  
-      .details-container{
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        width: 100%;
-      }
-      .user-details{
-        width: 100%;
-      }
-      .pagination button{
-        padding: 5px 5px;
-      }
-      .sidebar {
-        display: flex;
-        flex-direction: column;
-        gap: 10px; /* Space between the elements */
-      }
-      #search-bar{
-        order: -1;
-      }
-}
-
-@media screen and (max-width: 480px) {
-    .design-option {
-        flex: 1 1 45%;
-        max-width: 130px;
-    }
-    .price-container input,
-    .sort-container select {
-      width: 100%; /* Stack inputs and selects */
-    }
-    .details-container{
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        width: 100%;
-      }
-      .user-details{
-        width: 100%;
-      }
-      .sidebar {
-        display: flex;
-        flex-direction: column;
-        gap: 10px; /* Space between the elements */
-      }
-      #search-bar{
-        order: -1;
-      }
+  .color-selection label{
+    font-size: 10px !important;
+  }
 }
