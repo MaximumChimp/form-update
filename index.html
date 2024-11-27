@@ -15,31 +15,31 @@
        <div class="details-container">
             <div class="user-details">
                 <div class="form-card">
-                    <h2>User Information</h2>
+                    <h2>Informații utilizator</h2>
                     <div class="form-group">
-                      <label for="name">Name</label>
-                      <input type="text" id="name" name="name" placeholder="Enter your name" >
+                      <label for="name">Nume</label>
+                      <input type="text" id="name" name="name" placeholder="Introduceți numele dumneavoastră" >
                     </div>
                     <div class="form-group">
-                      <label for="email">Email</label>
-                      <input type="email" id="email" name="email" placeholder="Enter your email" >
+                      <label for="email">Adresă de email</label>
+                      <input type="email" id="email" name="email" placeholder="Introduceți adresa dumneavoastră de email" >
                     </div>
                     <div class="form-group">
-                      <label for="phone">Phone</label>
-                      <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" >
+                      <label for="phone">Telefon</label>
+                      <input type="tel" id="phone" name="phone" placeholder="Introduceți numărul dumneavoastră de telefon" >
                     </div>
                   </div>
             </div>
             <div class="user-details">
                 <div class="form-card">
-                    <h2>Room Measurements</h2>
+                    <h2>Măsurători ale camerei</h2>
                     <div class="form-group">
-                      <label for="roomLength">Room Length (ft)</label>
-                      <input type="number" id="roomLength" name="roomLength" placeholder="Enter length" >
+                      <label for="roomLength">Lungimea camerei (ft)</label>
+                      <input type="number" id="roomLength" name="roomLength" placeholder="Introduceți lungimea" >
                     </div>
                     <div class="form-group">
-                      <label for="roomHeight">Room Width (ft)</label>
-                      <input type="number" id="roomHeight" name="roomHeight" placeholder="Enter width" >
+                      <label for="roomHeight">Lățimea camerei (ft)</label>
+                      <input type="number" id="roomHeight" name="roomHeight" placeholder="Introduceți lățimea" >
                     </div>
                   </div>
             </div>
@@ -50,29 +50,67 @@
      
 
       <!-- Design Style Selection -->
-      <div class="form-card">
-        <p>Select an Interior Design Style</p>
+       <!-- Modal to view selected item -->
+<!-- Modal to view the enlarged image -->
+<div id="modal" style="display: none;">
+  <div class="modal-content">
+    <button id="closeModalBtn" onclick="closeModal()">X</button>
+    <img id="modalImage" src="" alt="Selected Item">
+  </div>
+</div>
+
+<!-- Item selection (images with hover effect) -->
+<div class="form-card">
+  <h2 style="margin-bottom: 30px;">Selectați un stil de design interior</h2>
+<div class="design-options">
+
+  <div class="image-container">
+    <img src="https://www.decorilla.com/online-decorating/wp-content/uploads/2023/12/Luxury-interior-design-guide-by-Decorilla.jpg" alt="Style 1" onclick="openModal(this)">
+    <button class="select-btn1" type="button" onclick="selectItem(this, event)">Select Item</button>
+  </div>
+  <div class="image-container">
+    <img src="https://media.designcafe.com/wp-content/uploads/2022/07/29185240/industrial-rustic-living-room-in-earthy-tones.jpg" alt="Style 2" onclick="openModal(this)">
+    <button class="select-btn1" type="button"  onclick="selectItem(this, event)">Select Item</button>
+  </div>
+  <div class="image-container">
+    <img src="https://media.designcafe.com/wp-content/uploads/2022/07/29185240/industrial-rustic-living-room-in-earthy-tones.jpg" alt="Style 2" onclick="openModal(this)">
+    <button class="select-btn1" type="button"  onclick="selectItem(this, event)">Select Item</button>
+  </div>
+  <div class="image-container">
+    <img src="https://media.designcafe.com/wp-content/uploads/2022/07/29185240/industrial-rustic-living-room-in-earthy-tones.jpg" alt="Style 2" onclick="openModal(this)">
+    <button class="select-btn1" type="button"  onclick="selectItem(this, event)">Select Item</button>
+  </div>
+  <div class="image-container">
+    <img src="https://media.designcafe.com/wp-content/uploads/2022/07/29185240/industrial-rustic-living-room-in-earthy-tones.jpg" alt="Style 2" onclick="openModal(this)">
+    <button class="select-btn1" type="button" onclick="selectItem(this, event)">Select Item</button>
+  </div>
+  <div class="image-container">
+    <img src="https://media.designcafe.com/wp-content/uploads/2022/07/29185240/industrial-rustic-living-room-in-earthy-tones.jpg" alt="Style 2" onclick="openModal(this)">
+    <button class="select-btn1" type="button"  onclick="selectItem(this, event)">Select Item</button>
+  </div>
+</div>
+
+<!-- Hidden input to store selected style -->
+<input type="hidden" id="selectedStyle">
+</div>
+
+
+      <!-- <div class="design-container">
+        <label>Selectați un stil de design interior</label>
         <div class="design-options">
-            <div class="design-option" data-style="Modern">
-                <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxMTEhUTExMWFhUXGB0YGBgXGBofHxkZGhgaGhYZGhgYHSggGxsmHRcYITEhJSkrLi4uHR8zODMsNygtLisBCgoKDg0OGhAQGy8lHyUtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf/AABEIALcBEwMBIgACEQEDEQH/xAAcAAABBQEBAQAAAAAAAAAAAAAGAAMEBQcCAQj/xABOEAABAwIDBAYGBwUGBAMJAAABAgMRACEEEjEFBkFREyJhcYGRMqGxwdHwBxRCUnKS4SNigqKyFRYzQ1OTc4PC0iQ0RCVUY3Sjs9Pi8f/EABkBAAMBAQEAAAAAAAAAAAAAAAABAgMEBf/EACYRAAICAQQCAgMAAwAAAAAAAAABAhEhAxITMUFRImEEFFIyQvD/2gAMAwEAAhEDEQA/AMZBr3NTIVSzUqKsfC67DlRc9LPRQbiUTXgXUfOaWejaPcTUuU5nnv51X9Ia9DpqXAe8lkxXYXUNT5PGuekPOjaG8ntuwaeUvjVUXDzroPK50npjWpRZlYNepcqqznnXmc86OMfKW5cg1209VNnPM10lxXM0npjWsXKHBBFPFwhPCqHpDzPnXpdVzPmaOIOYIWXRHiPj7qcefFhQ10qvvK8zSzq+8fM1PD9lc/0XruJvHKpmExAAnn7BQrJ5nzNdhavvHzND0bVWC183QRrx2ZU+XdwqS0+dBqfmaFATzPma7DivvK8zSeiC1voN8MQLX8eJp97aBjKD3x7BQIl1f31fmNdhxX3leZqOB3dl869GgYRcdZXh886npxg+ArNEur+8r8xpxLrn31fmPxqX+O35KWuvRqDWK7fH3CpzWPSkcu2sk6VfFSvzGvcyjqSe8mp/WfsfOvRqju2ieqiff58BULG7VSgSpQFZyhJ4T51Fx7Z7fOj9W3lh+xSwi921vgpUpakD7x91CTzylGVEk9tcinsNhFrMJST7PP3V2Q046awck9SU3kjUqKWtx8SoA5SJ4HKPUpQPmKVPfEnZIFIpRR+dwkj/ADV+QrwbiN/6i/IUb0G1gBFKjDGblLRfrLTzTHrESKrRsZviV+Y+FG9BsZQ0qIjsZnmvzH/bTR2Y1wzHx/Sjeh7GUVe1fM7MaJ9E+Zq1Y3fZP2CT3n40ciDjYGxSo8RsLDgXbv2lXxqXhtgsH/KT3GfVek9VD42ZzSrUhsXD6dCj1/GpbGwcPE9Ci2oip5kPiZkaROl+6vVJixseRt7a1zEbIYyrSGkpChEpABibieINxfn3V0GkKQ2paQpaUJTmVc5QLAToByFJ6yBaTZkAI5iuq11ppsyMiR/CPhT2EwqCRKEcj1R8OcUudeiuB+zHgk8q7S0o6JJ8DW4L2aiFfs0j+FNrd1SUYZEjqIFpskdnZ20+YXEYSnDL+4r8p+FdDCr+4v8AKr4VvCWQR6Kbk/ZGk+qwpxLQkmByFhr8wKXN9BxmCjBufcX+RXwp1OCX/pr/ACn4Vv2VI4CB2cfm9NoQFcu34fPbRyj4zCU4Bf3F/lPwpwbMdOjS/wAqvhW7pT+ldKA0pcw+MwcbLd/0nPyK+FODZT3+k5+RXwremkU4QBRyoOMwVOy3v9Jz8ivhTg2Q/wD6Ln5FfCt0BJ086ZexATx8azlrpFx0WzF07ExJ/wAh38pp5O7+K16ByO0R7aOdvb6tsSArMv7o9/Ks821vLicVIWshH3QfbzqoTlPxgU4xj2ySnZLo1SB3qSPaaj7R2YpSQlAlZIgAg6mPszzqjLQ5US7gwMQPxtf/AHBWrTWSE7wPYHctLac+LcSgDUEj4+0/w1Jc3jYZ6mDZzEWDiwQP4Rqe4ZR31dbW3VOJfDy1hLYzDmZzkEAaDQXvwtVps3ZzDH+AzKh9tVz58PCBUSkl2EYt9AZ0O1l9fM+M14EJA7k2gUqPjiHvvgdkpHqmlU830XxP2D2C3rQqziBPNNv5VfGrzCPsuegsE8jY+R18KAHcEeVMhCk6Ej55GrINQTh4qLj9gsvemiFfeTY/r40H7O3mxDVpzDkb+o6eBFFGzt8GVwHElB5jTyN/KaQFBtPc5xF2z0g5CyvLj4eVDb+EKTBSQRwIg+IrZMM424JbUFdxv4jUUxj9ltuiHEBXbxHcRcUqGpGPNKg1d4F4G2nz6quNs7mwCpoz+6qx8DofGKC8cpWHWAsFJ1hQ9nxoqyrQVYhQ0V5j5vUjBkAXuOFBw3jEQfjXad5gPkUtjHuQdLI1EVMZUMuYmIEk9g1ms6/vcR+tPMb05z0R9FfVPjalsl6DdH2XG0dsOLkohtsTHFR7biB3VLwSXFNJJM9URbs7LVVMIvlTBBBEL09E3mdRRtsQs9E0kwFFIAzA34GO2RUyXhFJ0UDTvOxFiKscHiRE8iDQnvftfocU4hEmImANYE1SI3lcExMHuprSl2J6kTWsc6k2zEWF0mDYm1+FeqxqZPd8+ysoe3pdVGthGv6Vwd4nSeP5jRxalByadmwJxSUgSdBXjeOTrIge01kLu331CLDz+NJG28QBAI8v1o4p0HJCzXfrqVGAadVj209UEW49tZAjbWJGi4Olkp94r3+1MQRBdPkn3CpejP2hrVh6ZrJ2qFGEnxpwbRQkXNZB/aDwt0i/Ax7KaViXDqtZ/iPxp/ry9hzR9Gxf20OfcBTqNqJ+0fAViocV94+ZrpKgdb0frv8AoOZejVds73MsjrKE8Ep18qz7bW+Dz8pRLaOw9Y954VSbRbHVy6kxVzsXdPEPAKCcifvrsPAcT2VcNCEcvLIlrSlhYRRpa4mp+ztlPPnK02pXaBbzo92Vuewg9YKfc5AGPyi58ctGGF2DiFDKEJaRyMD+ROv8XnWu6+jOq7M+2XuEkdbEuT+43HkVzAPj4VY7U2Y0yvClkZR06AUg2jMkyTAkyOXE1ouF3VbF3VqcPL0R6r+uq7fjCNtt4cIQlI+sINh28edLbJ9huiuiBgtnPPoytZRlWvMVHSVqjt4HSrfB7moEF51bp5AkJ9pJ8xTu5I6r34/+pyiSKvYrsje+iC3sfDgABhqB+4k+siaVT4pVRB85Ou4lpSkmFhKoOZPbGoirbBs9K2VqQBBAMHmCZvHKKI96sAsvqIbVl6vWCTHM35zXm7+GKm3krA9FC9IjruAgj+EUOKcbBSd0UCtg2SoAgKuJ402rYK+U1pGGCSltBEZQBPebeyvNolPRvrbAK0oURaesEnL7Kz2mu4zJGzXkGU5kxpFWmA3reQtTSwVlEEhWpSQLg68ede7mb2F944fEJAJEoVAFxqkxE2uLDQ1L39Zaw62MWIzJV0ZT/qIUDKSeBFyDQ4Mneiyw29OGXZZ6M/vaece6s8+kxhJfZyqCklBgpIMyoQO+r/fxGGGCDrcEuwER5me6D42rOWVFRSOCRb57zNCTWQlJeBlezHJIShaxwKUKIPiBXaNjYg6MO/7a/hWn7CxrbGEZbuXlBRSghQ1JWSTHoJBkn3wKlq3jYQgAh1agLqKQJPG02HZUvWkvBpHSTWWZWndzFHTDu/kPvqQ3upjTph1+aR7VCtAd3ybGjLvjl/7qY/v/ABZOHn8SwPYk0uXUf+o+OHsrdlbMxKz0brBS6E5pCmzmROUqjNAVJEjj2aUSjZWLQ2A00FLAhOdaQlPfBk87DxqFht48Qtan04aFBsISnrHMFLBJsBMQPOvF7y7TJhOHM9jLhqHGXdFJqqsoXfo9xzilLWprMSSolatTqbIp1n6McQdXWh+Y+4VaObX2pmhSchgmCiLBIUo9Y6AFJ/iHOn8Ph9rOoDra5Sq4ILQ1/FV7tX6IrTK9H0YL+1iUDuQT/wBVS2/oxRInFG/Jse9VOo2HtZerpH/NSP6fdTje6OOURmxM/wDOcPsFTun/AEh/D0et/RrhxriHfAIHuNPp3EwI9LEOeK2x/wBFWjP0cKUkFWJB/Mrh2mpeH+jRFiXvJH/7VezU8yJ3w9FId0tmJ9J5Xi8n3AVyrYWyk/an/mLPsNFbX0eYfi4s92Ue41Ma3Fwo16RXeoe5NHHL+g5I+gHDGyE/Yn/dNR9pPbOLS0s4cZzASro9DI4nStFb3TwdwGyYMEZjrrwNNbb3fw6MO6pDSQQmxlRuFDmaOJ+2HKvRn2xsdhm8O0k4VC3cslSm0XlRjrETpFcYx9bnBKBwS2kJHqufE0U7u7pB1hlZVl6kG0zCjw/UUWYDdthq4RmPNV/VpS4nYcuDJNiBYcd6RPolIRmEx18qiAqRMHWK0bAYZkISpSVOKKQTmVa4BIgDTsM1H34SjM3ly5jMwBMBbcSRVphMEejRcegn+kVtCEfJlOcqwSGdppQIS0EjkkgeoCpLe1WzrI8PhUL6h+96qRwI4mtKiZXIs28a2dFDxt7aGPpCfTkw4kT9YRpVkplA4k+NCe/ioGFHD6yjjSaRUW7L/c19KUOlXFw8OS1/Grp7aoHop8/gKHN2v8Jf/FX/AFGrQo4nShIJN2Pf2o5+75H417UIrpVVImx55y1MNrCkqm9hPnehjbWPfBUWnDFjEAwIM3IjgTrU/dPHKWwFrkkggkgCSFEExw0rndp2dCpqi6DCSFWv+s++qDYS/wBpiBNrWP8AF8KsHNrQspj7M9vAeVAuE3kyrdSWzDjim5Sbi0j3+uk5K0NRwwS3hcXhsWpJTlU2vquJ1jVKo0mINWG/e30YrCsKSRmCznTyVl1/CbxVXvsnM4lbaitsg5FlRUSJktrKjIUgkiDwIqgRhXIAKFQrQ5TBnSDpWpiixfClMJKXCpIKsyDohRMAi/2vaK92KpDcuOAHKQQ2qf2hBgJMaJuonsEca42QTIJFs+VY4FKoEHyPqPCr7ZW631hwZVgwmQlUgABWXrKGpJEwIJBF+Ii6Cgz3PbR0TuPxyUy7ZvP1UhCTcJCdAToALxTGN28nEL6PB4NtIOhLYWo8zBkAeznQdtTGOre6JJ6ZSTkGQKyjLbK2iBYRGnDjrWgbm7BfaHSPuEKIGVpBgA6grLepE2FwJ56Fjywie2SlrZ6ittouCJUGkCesLCBfv7DUDdRtPROrygRN8ot1Zm3aBU7baFJwrkyRERGkqGk6zr399Q9zILDo5riP4f0qZyuzWCol4XHkYlOY9UMLMXvLjY0ExJFNb2bU6Nk4iAFAZbHWSL8Lgn1GnFADFICtBhzMdjiD7QKz76RdqOKy8EFZMA6JFmyeeZQWrtAFZxbdJhJJZOt+H19KlxCoQlHRpObXOFAwOPU6PugcdCj6PXs2GUhYjIREjnPsMie3srMW9pOPKYaVJSk2tAJy9W3YBHKtF3XxoYaZT9/MnT7KjnCv5h3ZjyrST2ozQTNYVYgBWpucugMxrflSDWRYkzIm47Dz10qQ08QoEEK4mRraBfu9de41GdYj0hAk8AbmO81k9tWjVWW+EOYpIkdXKb24ZeyxkeNT20wB899Cu197G8KlCCmVKAgQdAesZ05mPjUpvajq7pVCdQYgEcxxjv14V0xafRg3QRAVytYTdRAHbQ25jVn7Sj4mPKmFOEmVEk1psJ3l67tVAMJBPHlVPt/aSjh3bAW94pkKM1F3h/8ALO/hH9QqXQ02yVujj1/U2oMWPD9486tVvrVqo/PdQ/uVfCNdx/qNXTroT2mqQndlHvmhILMATlM/maq5wD6uibv9hP8ASKDt48apb+Ux1AQPzta0W4A/sW9B1E/0ikuxvpEhT6udcGTrTCsWkGwmvPrh5D51qiB1ZihDfhVsL/8AMoopVipPKaFd+FyMLb/1KL0n0VH/ACQQ7tkdEv8A4q/6jVk4qdTVVsFEtK/4q/6jUxbWX7MzzOnwpLoJXY4U0qZbxAAjq/npU7XsVMzjA7XLiOt1bZTNr8+46W09dF2wcc10JBWhELPVUoDWCYk3Ek6UKuPBNzpTI20yATnE3yjiogTArBo6EwuxobU4haHUWBCusDIkGLUJ4HBFL7qikkDEFSLWKSFDMOzSnNkbTQ/OWQRwMTx4A9lWqVwL1KhmxuWKKjePdRDqlLYWEKX1lpM5VK5x9lXbfjzqFsHZTzKFtYhKeiJlAkHrggwI+yqIvF+GtE+ExIUTQp9JOPWlKG02SsyTxtBEGtKbM8DO28O2XEpSEoQj7guoK64WY5pA1nSrvcZ4yCgDMtuLcxCDM6gBFx2G96FNiizYW4cqkqJNurOVAk/a9JWukdsVa7jPKR10qJCUlMETCSQo5QL5iUzHaedZz+JcIOXRoez9hssFTjSUlSiSVEQVqJkiToCfsiB7rdl9IazAa3yqBkEaiDf54iqI7yMZYyPiDM9EuRyItr+vjHxm9KAkEJdP2kyy57cuh1tFZ/IQQbXWFs9GZzKvcxHeL3BjypjdBgjDklGq5g2OgBn550Oq2wh5WdSH7XCQy5E63MaTPqq9wm3G0IgNYgWOrDpEH+GhNrsqxvakjGxMDoFyZFhnTPj+tZhvyypWLLaUn0EwkcEiU2HZlXHZFaDjtrtqfByPgllQkMuZvTReMthAidKD95nUHEl5LLpslKQW1JAShJUAcwnUaxoDTi/lYpdAy0ejcbUswIWNTrBSkxqDJokxm2iVICUZGoCAoj0kpAvEWnKknjeqDEsJcclSSgBUg3uAYWi+s6+JvepWOfK1NKIWGggpVEwFLUtSsp+11QeJvbQVrh9kdB/sDabi3VBOUKFiidSBKSPAhJ7baQSYtupVHf3EKERNZXus+ENpzKUFJchLgH2cqejMkR4GxE8rGQ3xYSkElKlAwSCIiZzQCTfXKJPfrWcoZwVFkTepbWVCyekCVykLnq2OpAzLbMC3GPSip+7iy4CpclfHpFJzjkA0kkNJ7CZ51WDGYR5xRgCHBmSECSmxk5RCrmCCFeuasE7YwyW1NthQSrqlJQ4bRcXGh0jtqoWnZEkmXIbBvmTEkWUCba+yl0PZHaT83qswuOZbkNHKFHModGvU62y9mnbTx2oFZgpUweqSkgGdQOrYzXTuMtpLUoXAN+z5+ZqJvGQMK5F5j+pNRsRtApydGgrMgr9EJSgjS9/GOB7Kc2682vDOBCgdIPAwpM3iNKl5Zcehvchw/U24BJg6fiVVxN+tPdHuoe3GxzQwjQW6lNjZRKftKvJt5UTApcHUIPaOOl7Ckp06BwbyAO3LYp2NIF/426NsEwS21exQnw6ooP2/JxK5myfD/Ea0ovwTxQhggSlSUpVraUDKQeXqvUSm45K2po7fwyZ9IDmeJvGnkPGq/aW1WmDlKVKVAJCeA4mRUrCYkFySJVDgE8AlQF45kjnpVTtXY6lOBwlIEScqZmTBgW4Qbk3k1C1XJZGortFrs/GN4gHoyRlMGR5R5TQ/vuiDhBP/AKhPtpbK2+hlzowE5AIK1Jvr1Rx0EDv75rzfFxK/qakqzAvpvEWkASKtSfTBRXZe7EnoVQkn9ovT8RqXiGlrBGlp5H18aZ3fbJbUB99f9VXCW0psTrwobyUkUKNkiPR81D3ClV9nR2+AHwr2p3sW1GM7ZT1CbeND2HxCA2pWZIWkEojUkmCkfiFvGh93FuKnMtZvxUT7TXHSHSTWzYJBc0tTTzYnLqUHP6RKgVNT6IjS8C8TVu5vCFSgNnN3pI/MgqHrrPhiVWOYyNOzzqZhdqPZkjpDGYWgc+6oXxRbW5hrgMe7msEi3Koe2MGvEOw8FlAukgBIBjTMYBolZZSADe97HKPJESO+amYRSAeqlI7gK5n+R6OhfjANsnc7EKCwoZQqAATMJCs0T6J0+9RZuxu8rCqzFYMKzZCBE8ikTbuUKthib007ib1nLXbNI6KRcKxJXqpI7EISkecFX81AuynFLdUSFQHCCZJkAk68DAokYckihjY5UOkyyTmVAg8yTaL8arTm5XZjrQUaoL07cbUtIBEXSIgXgWIPKR86QcBvmtSylbYlJKSkKNiDCo8qDsBthtjFZXW1rXIgJWEpBIkXgniNPOouE2t02KeXkSjMoKypsBYeJNp7b1stLyznvIeYvaj4f6cZcqUxATq3IJTzCrTIN+yoe9W8uHTlDoUHDC4AJSblKusP3SeHEa1Owg6snSOPbQHtxpK4wyzlxDMhkkwHW1HqoJOi4ECdSO2rWnF9g2x1W8WGU2UkqzdKCBkMdHkKFcbGINdNbbw2VpOaOi6wSUrusFxWuUwMy9O+g4rAdJIsIlPcACD5V3hnEhSpuDmjsJmDWnEidwTq2i0tIbU8lKCoZ4Sv0M0mOpdVzc1HxK2cwyOoCUqCk9Vc2kjRFh2dgqhZy9CsH0urlP8AEJFSiU9C2ARIck9xSY9nrp7BWHOztu4RKUlTiQsKEno3PR/J6QIBnjccaI8Hvvg1rAKxJscrawlMSdQkGJi55HTWsqx7yPrCViMmVPV7pCvMgnxp/ZBR9ZVKwlK80aQM4sL8BMVPCm7DdSNA2nvvg3ElKFxMhJyOenIyEKCwrUU5h9709Gnp28s63OvA2HA3Ee29Yzgyc7YMghQ8wR67VfbWxpUlLYnlepkqwaQSYf7v74Ni6m4IVKymOsbCTPh4DhXO8G9IU2UYfo2w4cyumCyCoZdMlk6DQ8e+c1OLNkoNyYHjzohY2kyjDqYUAtRNieBi680am47uzXBucejpWnpM0ndctqw6UIKoQjKsAKABPWMFSesJPHhUTHYRtPWbU2FX9NPHt0V4gjuqi3TQ66A4099XAAbQCVKS4Eq60pMp1MZiJnuq+e2pn/ZvoSpYWQA2pAKR9kkJKheCdOVaJuSz2c2pCn8eiixuNIWoLMwkAkFSgMzjUEZpMR2miLZm3GUJQ2teVPVUCbQIE+lEjjaoeL2MFJWtJsoAdYRBSpBNxY+ieAvVV/ZrpbRqU9XrWUCBAlKhIMdlVJWsmdhWjEhUkK6sHMpNyUkqUQn964FM4jbJSSotFIGuc2GbsTqec9tDbWx1FJXm6JCPtIEKPAaXOtcbKxzi1ZC8vLe60hXG0g6juUKz2xSGi32ptlopI6EKVGqUEBJmLyROvLWqjGY1ZOFaWnKU4hBjsJEaVPONcZcKQwh2YugEEgSQQkg21Nj66h7WfSt7DqDK2yl1BWVJtlChJkTPG81UfooOdk4goYcUBMLVPdf5tVLjduFQN+PGZSrtmxHGas9jYhC2nEBaZzq19UTY0H7X2atDh1hRkiDB58RPhVSWQTwTU7bWBHVPGSCNbmw0pVRKxh+4kV7SoLMwBr2a4FezWrEjsGnsKeuj8Q9oqODTuFPXR+Ie0Un0WuzVi7Yd1eYZ/rfPKoyl2HdTWHcvXmKOD07LQP3ru5NQEPCT6+zxpzD49sq4n1D41rDRcjLU1oxLrCKV9lBWQNAJq5/tZZSEnA4kCAIDbQGl/wDMk13ugoBqCoXWs66AuKIHcBAoqIkV26WjGB52rrObPnffBz/2mpRQpv0DlWACIQnUAkcOdUGyMWlD/SK9GDYAEk/Zse2tI+kXc/FP4xbzTKigoSnMFNwSBBspYI1jThPGgfG7m4tpOZbSgJAklvVRCU2CybkgVo2uhRXkL91dvh9taXE5SlQgtk6E2sdI+NSk7PbzlxpxQcBzArCVTIy5SdYi8cJkRQ5ulsfEMurS62UhYESU6jsCjw9lWO0HiHAEGMokmftGNey1KhHreyGcSFtuZSooDjakgJKSCULTbWFcTrxoMxOyENuLbU8kFJjRR5EGwPAzRfutiQ5iXSn0Ut5fFSypRE8JPtqs2xupi3H3F9GYUox1m9BYfbnQChulkaVspE7JZ/8Aem9eId07gipA2Kxb/wAa329V3wtkvxqX/cfGRPRmPxtD2uX8K5VubigCS2oACSczUAd+ep3IrY/+ZGVsnDT/AOcREa9G9M92Sw8a6Z2dhEqleJKk8Ahtc+JWBXbe6j50A/3Gf/yV3/c7FHRP/wBVn3Lp7kG1/Q39Twk5mn3EqE+miAefWCiUntipre5ynWw8w7nSRYmfETFjUBjc3FOSEhNlFJBcRqNeOnbVvsTE4nZD4RiEHoXAMwFwR95BjUUPPQlgo3tgYpm/Rk8iOXGKqnHFD0gQe0Vvb2HaWhLjSgppcKzJgq7icpqk2hu+05ZQQlREgCFSOf8AhjlzpUPcyhZ2gEYYdGsFIAbScwEADrG/GDPeTzoS2ntFSVdG2rkVLBEqgHKCocsyqINobsLYMtmEm+VSk3I4iALxyg0IbRwLqFlSkxJkCxtNtKmOnTHKdouto451vCNYQrJUtRWvrEwD6CPee+jDcfC4no0tIlSBfJwgcfMx41mmHxOZ1KlnSKLMLvc43ikBlzK2lGVYGiyRefJPLStUsGbNOXsZ5ZGZpwJFilIy5u0m8+qvXd35SP8Aw6kkXEgm3ESm89t/cLXc7abjzGZa5OYjgRlgEd2poiK02BgTpPHurBwRSAbE7Ed6PIELJSOoq86HqkkaEDjoYqO6hTDeHKm1Zw4lI6QHRyULJB4hNgO0GtBUkA6keNC2/WIKfq0QQp0AggEG6TpwIIBBFEYKIyi2tshuMzaQleeygSOrlbPP9437aGcLvA+2rIVkdbL1iCk68VyRpeDWk7tgPNu50JMOFMRoE9QRJ5IHGmsVuXhlG2ZHMA2I4jrXg9hq2TkBVbyji3hz2hIv50qPE7uuJslxISNAAUgfwgQKVTuY6Pml1hSVFJ1Bpo1aYHAhw9ZSu4frUzamz0NsqyJgmL3JiRxNW5KxqLqwfBp7Cnro/EPaK5aYJEkgDmfm/hTrSAFAgkgEG9pg+qm0CYfvvW8KpXtrhHo9ZXq8+Ph51CxOLUuxNuQ0/WmmsNJ0rGGiorJtPXcn8RxWMddMFVuQsPKr7ZWC4zf11F2fs/iRRHhWwOytHL0ZKPllvsJkhQEmJrTcPZI7qAdgtDMDRdtHaqWUc1kdVPPtPIdtVFuiJpXgb3i2mlpECM6vRHvPZ7aznazeIcHpAkqSokj7qgoad2lXLyytRWsyTx+eHZUltkUWFUA+KaxgOZKJIM2I99R2cG48paFoW0nLmWSNYIASk6GefIVo6W08Yqk3vZWpmWD+0QrNHBQghST5+qiTwOPYJ4DBJSFpZTcA2JIzKi2Y8RVsN5UuNdAllLD4spHXSo8JbWFAg9kweBNDuyd4m0rh0FtQN5BInwuPEUSY9jCY5H+KjpAOqtKhmHkdOw1jG12bSprBI2enpglLqn3VosOjK0rEkTmU2oJXpoZI4m9QNtYx9h8tMPIcSAMzWIcQHEK1IFxaMpuTqau8P9aUnIrFlACQAGwE6COAFquF4VhwJStCV5RqoSe0lRvVuUX0Qotdgnui7nxrRVh25uD0apsRBzQSkpGsGtA2huzh3ZIT0aubdvVp6q6wLbLI6gQ2OwAeuk9vFhkf5qVHkg5vWLDxNC+KyJ/J4Rl+82AfwK+srMhZJSsAi/EETY1SYjafTo6N0yOB4g8xRdvtjV4wpSkZW0EkDWTpJNAWP2cpv3xSWon0U9Nrsl7tbyvYB3IVKLCj1kg2UOY5Hu9taxgMQ2430zS5YVycVmQe28jvmsQUrMMqvCpewNuvYF2U3SfSSbhQrRMyaNoedKCekLQZPouKdXJnmCkgHx+FQMXgELy9GlDoPpErP8pAM9xjvoIa+kdagpBabLZPoKTmtNvStTr/ANIbhiEpAA9GBHh2dlWRROxmxGVKgBJMxGa1tUlJFj7OIrxrYDbTiUOoSlRukoTnBB5xY+qon9/SoZVMongQIIrtj6QXk2yojlFMA/wqHMI0CSp1s8GGgkp70CV/xA+AqcziFPNkt9I3N/2gj+VWh8Ae2s4Tv89PVISOU+yaeVvk65EqAJ+0CZHzyopPsWfAdthSSBiFOkDSVAp9YuPHzqBvxjUqGEiZ6ccuaeUeyhBjfDEpI/aCCdFCR8eY8KJN4H+nYwTpSkK6e+URoU1nJUXFsv8AdLFBDbpOnTLH86vjRK3iEq0I+ez30H7BWtLTuQgft3JHPrqjXq+Yqwa2jPVNlfh/6T7QfCkxhMkDspUPnaquJHmfiPZSoodnzzsaJ4VN3hdlASNT8mqjBoUOPqqW+1aSZPOprNl7sUVreGp5DAkU+lNScOgTV2QkJlgmrXC4SKdwzYjSpbcVF2XVEnCNVLC4qEHYrsFSiAm59QHM0qCwi2btANjSTwHx7KYexalErWqVH5EDgBwFRkqS2kDU8TMzNQMS7ewn1VXgVFgcaaaO1CONuVUq3FczTWc1DbLovlbXrn+0p4+FURSVfOnz2V4kKHM92vlx+daFYnRN260wppS3G0qUEkg8SYsAdb1VI3MaUlMuKC8omIInjYjn21YIctzJrplC5mT3VokQ2VWN3PWy046l4gISVQARMCYkKtUzA7pPqQlRxSgFAGAFGJH471Z7WUr6o/eR0agey3Kr7BHKhIjRIHqFVQrwDbW5TQu4+pR7EgHzJNO7HaSlLiVAZm3Cmf3bFBjScqh4zRE+0V8PnwvVYrZoQpS1TKonUjqzB9etRKCZUdRkEqvYkDl//dKYxTQKY1FTHMPJkXFcPYY1jto13WBePweQ9nCo3R5hBH6UV4zDgiDccKqHMHHDy41pFkSRQJwK5IEa8TBPhUlOy3f3f5v+2rpnBK1k2vPI2APmaKNkY8uo+r4kZh9hc3SeBnx191qvJGPQCN7CfJsD4IcPsTU9jdHFK+wv/ac+FFT6H8KsZzmQfRWPfyNGe7m2gqJM1Si35Ic0vBluztzMQ8JbKlCSJS0o3BhQmdQRFT0bh4kW/af7ce1VabuakBgwY/bPkf77g91FClIWJV1VD11O11bZTmrpIx7Zm5C0T0zLrw4QchT2ghyPMGpO0tq5ehw5bIDTiSgZQlRKlJASROUnMYzAwdbVpLG1WiCQFmCUnqnUGD4dtDe9+DRiUocTAKFoVmBk5UuBSrjsBqtrrsnfnoi7L3qRhM4fZdbQtxR6WApsErV1cyCqP4gKK8LjcLi0gpUhwcCk6eRkefhQqxgsVhs5aIdaXJW04MwUDcx5nSq5nZGAxCszS3NnYn909QnusPDq0n9jX0aD/YqOC1gfiHvpUK/2LtxHVTisOtI0UoEEjmQE15SpewyYw3TjmlcJroqpFHKUU+wL1wmn2BTAtWKkoSRTWHNq7SpSjkQJUfUOZ7KkY+hRUoISJUfUOZPAVbsYUISYMq4quJMRHd2V7hMMllETKlekrmfcL6cK6ynsPzeqoLGHRM28KiqajUW5/GrEDmONNLcGbJoSJvy4xzoCyArDHl66QwgNtPnh21YtsCO/2d1SG2h8+r57qVBZT/UyKdRhudWxZ8a7QxToVlWMD2a043s37pI7v1q3bY404nXKPS4ngP17Koko9o7OdW0psZJWMt5FuMxPsFX7TItPz48a7ahJ95uTTpVl7aYj0JjS3zzplxmaeBB0MVyonv7vhQBAVs9JPI8xb58a9OEIsRI5jUeFT0KBp9KaTQ7KR3ZyTawM/Nopg7DQbQPOiRbAOt++K5GGgdU9039etJJBYPI2IkTA1Am0cbae2ukbGTyq9bTNiIIuRP6e6nFNRp66oRX4dhIHRujMk2E/PrqJiNlFg5hdBPEC3Ye3t41eSk/PtFOsvgQhYEGw5Hsk+ygRSYXbJY6JlttErLijmVkSkAla1EhJuSvlxNSsRvWEozvtraQBHSJIcbJJgnO3cDh1kp1NUW/exUrXh0IOUOKWjuPRqWAbejLYoCIxGEUYStvgoXAPZIsR5g0WCSNZ2NtJKsykKSpCjmzJII8wbHvqwW22ZVOVR4jXxGh8Qawk44hzpUdVXNqG1Dt6gCT4i9Euyd8cSLBbeIHEL/ZrH8Y6pPeKdg0afg31siCC40NCBCkj8J9IDsv2U7jNnYfEIz2Miy08+Ge3roZwH0hYdEB9DrB/+IglPgtAII8BV5hNsYJ0lbOIbSs6lCkkK/Eib+IB7aeCMoBtp4bHJdUmXBFgEKISAAIgTpEfrXlGT+NxSVFKEpKRoUu5Qe5KkkpHZJpVnsRrvZjANdpr2lSKO0gU+1SpUAS0LUSlCBKlWF47ye6irZuFSykJ+2o9ZRgyY07rV7SoQEgt90D5kU30g4j9fmKVKmI6z/H4Uy40FQhXHSOEakcjFKlQB0h0ghtepBKT94A8eRE1ObTAHtpUqQDgpxIpUqYjsO0y42RKkG5MkHQ/A9opUqYDuHxQXwhQMEHn3+NOpVwivaVAHk8NK6CjpxGtKlQIWf7w7jT6B4ilSpgPoc7PkVw5iACAn0lejPmaVKkM4DhRdepPDj4XjhXTeInh2/C/jSpUCHJkdh5+w0pSbHtpUqYin26oheEUTOTEoI7QtK0R/PU7FYdCyoABQ4pUNO4mlSpMYH4vc1nEOOhsBoJy5CCbqM55GgAtHEyaDtvbqYjDklQCgLkggGOZE+wmlSp+CbyV+zdvOs2BzJ4pOhop2K7hcaFleFaS4iJyoCcwIsrq8ZBr2lSfRSJKt3cJ/op81fGvaVKoso//2Q==" alt="Modern">
-            </div>
-            <div class="design-option" data-style="Minimalist">
-                <img src="data:image/jpeg;base64,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" alt="Minimalist">
-            </div>
-            <div class="design-option" data-style="Vintage">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzHchIjB0YLGPzEVGX_aR5ymBK04QluKKE1A&s" alt="Vintage">
-            </div>
-            <div class="design-option" data-style="Industrial">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQeFcW_lsj9UuwSk4WLaxgcf-t3uNHPinzuwQ&s" alt="Industrial">
-            </div>
-            <div class="design-option" data-style="Bohemian">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEEE0UyKDGG9fwWc_QYtiCmGzPLYsGtIJK1w&s" alt="Bohemian">
-            </div>
-            <div class="design-option" data-style="Scandinavian">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-jK36txR1x74yrTeLzwy6DrXYIgvVzWSKGA&s" alt="Scandinavian">
-            </div>
+          <img src="https://www.decorilla.com/online-decorating/wp-content/uploads/2023/12/Luxury-interior-design-guide-by-Decorilla.jpg" alt="Living Room" onclick="openModal(this)">
+          <img src="https://www.floridaleathergallery.com/blog/wp-content/uploads/sites/116/2020/12/moderninteriordesign.jpg" alt="Modern Design" onclick="openModal(this)">
+          <img src="https://chiedesign.in/wp-content/uploads/2022/05/Luxury-Interior-Design-Living-Room.jpg" alt="Boho Style" onclick="openModal(this)">
+          <img src="https://chiedesign.in/wp-content/uploads/2022/05/Luxury-Interior-Design-Living-Room.jpg" alt="Boho Style" onclick="openModal(this)">
+          <img src="https://chiedesign.in/wp-content/uploads/2022/05/Luxury-Interior-Design-Living-Room.jpg" alt="Boho Style" onclick="openModal(this)">
+          <img src="https://chiedesign.in/wp-content/uploads/2022/05/Luxury-Interior-Design-Living-Room.jpg" alt="Boho Style" onclick="openModal(this)">
+          <input type="hidden" id="selectedStyle">
         </div>
     </div>
+<<<<<<< HEAD
+     -->
+      <div class="form-card">
+=======
     
     <!-- Modal -->
     <!-- <div id="imageModal" class="modal">
@@ -82,16 +120,44 @@
     
 
       <div class="slider-container">
+>>>>>>> 896455ba54467c590c5b032ab20e7730de7cd121
         <div class="dashboard-container">
           <!-- Sidebar -->
           <aside class="sidebar">
              
               <select id="categories-filter">
+<<<<<<< HEAD
+                  <option value="">Toate categoriile</option>
+=======
                   <option value="">All Categories</option>
+>>>>>>> 896455ba54467c590c5b032ab20e7730de7cd121
               </select>
-              <input type="number" id="min-price" placeholder="Min Price" />
-              <input type="number" id="max-price" placeholder="Max Price" />
+              <div class="price-range">
+                <input type="number" id="min-price" placeholder="Preț minim" />
+                <input type="number" id="max-price" placeholder="Preț maxim" />
+              </div>
               <select id="sort-filter">
+<<<<<<< HEAD
+                  <option value="">Implicit</option>
+                  <option value="title-asc">Nume (A-Z)</option>
+                  <option value="title-desc">Nume (Z-A)</option>
+                  <option value="price-asc">Preț (De la mic la mare)</option>
+                  <option value="price-desc">Preț (De la mare la mic)</option>
+              </select>
+              <select id="furniture-type-filter">
+                <option value="">Toate tipurile</option>
+                <!-- Add dynamically populated options for furniture types -->
+              </select>
+              <select id="color-filter">
+                <option value="">Toate culorile</option>
+                <!-- Colors will be dynamically added here -->
+              </select>
+              <select id="material-filter">
+                <option value="">Toate materialele</option>
+                <!-- Add dynamically populated options for materials -->
+              </select>
+              <input type="text" id="search-bar"  placeholder="Căutați un produs..."/>
+=======
                   <option value="">Default</option>
                   <option value="title-asc">Name (A-Z)</option>
                   <option value="title-desc">Name (Z-A)</option>
@@ -115,6 +181,7 @@
               id="search-bar" 
               placeholder="Search for a product..." 
           />
+>>>>>>> 896455ba54467c590c5b032ab20e7730de7cd121
           </aside>
   
           <!-- Product Grid -->
@@ -127,6 +194,8 @@
           </main>
       </div>
       </div>
+<<<<<<< HEAD
+=======
       
       <!-- Furniture Color Selection -->
       <!-- <div class="form-card">
@@ -141,36 +210,46 @@
         </div>
         <input type="hidden" id="selectedColor" name="furnitureColor">
       </div> -->
+>>>>>>> 896455ba54467c590c5b032ab20e7730de7cd121
 
       <!-- Room Images Upload -->
       <div class="form-card">
-        <h2>Upload Room Images</h2>
-        <p>You can upload up to 3 images of your room to help us understand the space better.</p>
+        <h2>Încărcați imagini ale camerei</h2>
+        <p>Puteți încărca până la 3 imagini ale camerei dumneavoastră pentru a ne ajuta să înțelegem mai bine spațiul.</p>
         <div class="form-group">
-          <label for="roomImages">Room Images</label>
-          <input type="file" id="roomImages" name="roomImages" accept="image/*" multiple>
+          <label for="roomImages">Imagini ale camerei</label>
+          <input type="file" id="roomImages" name="roomImages" accept="image/*">
           <div id="imagePreviewContainer" class="image-preview-container"></div>
+          <div id="errorMessage" class="error-message" style="display: none;">Vă rugăm să selectați cel puțin o imagine.</div>
         </div>
       </div>
+      
 
       <!-- Description/Comments -->
       <div class="form-card">
-        <h2>Description/Comments</h2>
+        <h2>Descriere/Comentarii</h2>
         <div class="form-group">
-          <label for="description">How would you like your room to look?</label>
+          <label for="description">Cum ați dori să arate camera dumneavoastră?</label>
           <textarea id="description" name="description" rows="4" placeholder="Descrie cum ai dori să arate camera ta. De exemplu, culori preferate, tipuri de mobilier, atmosferă dorită."></textarea>
         </div>
       </div>
 
       <!-- Total Section -->
       <div class="form-card total-section">
-        <h2>Total: $<span id="totalPrice">0</span></h2>
+        <h2>Total: <span id="total-price">RON 0</span></h2>
       </div>
 
       <!-- Submit Button -->
-      <button type="submit" class="submit-btn">Place Order</button>
+      <button type="submit" class="submit-btn">Plasați comanda</button>
     </form>
   </div>
+
+  <!-- <div id="modal" class="modal">
+    <button class="close-modal" onclick="closeModal()">×</button>
+    <div class="modal-content">
+      <img id="modalImage" src="" alt="Enlarged Design Style">
+    </div>
+  </div> -->
 
   <script src="script1.js"></script>
 </body>
